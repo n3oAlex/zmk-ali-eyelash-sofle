@@ -61,7 +61,10 @@ Recovery keys on `fn`: `D` = bootloader (left half), `Y` = bootloader (right hal
 output, `P` = unlock ZMK Studio. Holding `Q` + `S` + `Z` for two seconds powers off all
 parts; press each part's reset button to wake.
 
-ZMK Studio is enabled on the dongle over USB (unlocked by default).
+ZMK Studio is enabled on the dongle over USB (unlocked by default). Studio only offers
+behaviors compiled into the dongle firmware; RGB underglow is included via a dummy LED
+strip on the dongle, since the central has to run "global" behaviors before forwarding
+them to the halves. Backlight (`&bl`) would need the same treatment if you want it.
 
 ## Displays
 

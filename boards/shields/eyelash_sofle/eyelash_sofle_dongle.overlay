@@ -8,12 +8,14 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <dt-bindings/led/led.h>
 #include "eyelash_sofle.dtsi"
 
 / {
     chosen {
         zmk,kscan = &mock_kscan;
         zephyr,display = &oled;
+        zmk,underglow = &led_strip;
     };
 
     mock_kscan: kscan_0 {
@@ -66,5 +68,45 @@
         com-invdir;
         inversion-on;
         prechargep = <0x22>;
+    };
+};
+
+/*
+ * The dongle has no LEDs, but RGB underglow is a "global" behavior: the
+ * central runs it and forwards it to the halves, so the behavior must be
+ * compiled into the dongle for the RGB keys (and ZMK Studio) to work. This
+ * one-LED strip on P1.02, a pin the nice!nano pinout does not expose, only
+ * exists to satisfy the underglow driver.
+ */
+&pinctrl {
+    dongle_dummy_spi_default: dongle_dummy_spi_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 2)>;
+        };
+    };
+
+    dongle_dummy_spi_sleep: dongle_dummy_spi_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 2)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi3 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&dongle_dummy_spi_default>;
+    pinctrl-1 = <&dongle_dummy_spi_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        chain-length = <1>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
     };
 };
