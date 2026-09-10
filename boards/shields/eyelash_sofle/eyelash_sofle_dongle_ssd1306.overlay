@@ -1,0 +1,13 @@
+/*
+ * Same dongle, but the OLED driven as an SSD1306. Flash this if the SH1106
+ * build shows a shifted or garbled image.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "eyelash_sofle_dongle.overlay"
+
+&oled {
+    compatible = "solomon,ssd1306fb";
+    segment-offset = <0>;
+};

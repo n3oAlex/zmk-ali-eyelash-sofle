@@ -1,0 +1,69 @@
+/*
+ * Dongle: the seller's custom nRF52840 board (nice!nano v2 compatible pin
+ * numbering and bootloader) with a 1.3" 128x64 I2C OLED, a battery, a power
+ * switch and a reset button. No keys of its own, so the key scan is a mock;
+ * the layout and transform come from the shared dtsi so key positions sent by
+ * the halves map onto the keymap.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "eyelash_sofle.dtsi"
+
+/ {
+    chosen {
+        zmk,kscan = &mock_kscan;
+        zephyr,display = &oled;
+    };
+
+    mock_kscan: kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+};
+
+/*
+ * OLED I2C pins per the PCB silkscreen: SDA = P0.17, SCL = P0.21.
+ * Not the nice!nano default (SCL on P0.20), hence the explicit pinctrl.
+ */
+&pinctrl {
+    dongle_i2c_default: dongle_i2c_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 21)>;
+        };
+    };
+
+    dongle_i2c_sleep: dongle_i2c_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 21)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    status = "okay";
+    pinctrl-0 = <&dongle_i2c_default>;
+    pinctrl-1 = <&dongle_i2c_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    oled: oled@3c {
+        compatible = "sinowealth,sh1106";
+        reg = <0x3c>;
+        width = <128>;
+        height = <64>;
+        /* SH1106 has a 132-column RAM; the 128-px panel is centered. */
+        segment-offset = <2>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        inversion-on;
+        prechargep = <0x22>;
+    };
+};

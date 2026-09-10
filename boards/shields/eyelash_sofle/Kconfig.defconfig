@@ -1,0 +1,60 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+if SHIELD_EYELASH_SOFLE_LEFT || SHIELD_EYELASH_SOFLE_RIGHT || SHIELD_EYELASH_SOFLE_DONGLE || SHIELD_EYELASH_SOFLE_DONGLE_SSD1306
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+# The left half is the central in the standalone (no dongle) build. The dongle
+# builds override this to n for the left half via cmake-args in build.yaml.
+if SHIELD_EYELASH_SOFLE_LEFT || SHIELD_EYELASH_SOFLE_DONGLE || SHIELD_EYELASH_SOFLE_DONGLE_SSD1306
+
+config ZMK_KEYBOARD_NAME
+    default "Eyelash Sofle"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_EYELASH_SOFLE_LEFT || SHIELD_EYELASH_SOFLE_RIGHT
+
+if ZMK_BACKLIGHT
+
+config PWM
+    default y
+
+config LED_PWM
+    default y
+
+endif # ZMK_BACKLIGHT
+
+endif # SHIELD_EYELASH_SOFLE_LEFT || SHIELD_EYELASH_SOFLE_RIGHT
+
+if SHIELD_EYELASH_SOFLE_DONGLE || SHIELD_EYELASH_SOFLE_DONGLE_SSD1306
+
+# Two peripherals (left + right) plus the 5 default BLE host profiles.
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+config BT_MAX_CONN
+    default 7
+
+config BT_MAX_PAIRED
+    default 7
+
+if ZMK_DISPLAY
+
+config I2C
+    default y
+
+# Zephyr's ssd1306 driver also drives the SH1106.
+config SSD1306
+    default y
+
+endif # ZMK_DISPLAY
+
+endif # SHIELD_EYELASH_SOFLE_DONGLE || SHIELD_EYELASH_SOFLE_DONGLE_SSD1306

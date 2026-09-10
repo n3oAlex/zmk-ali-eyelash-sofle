@@ -1,0 +1,9 @@
+# local west workspace and build output (build.sh)
+.ws/
+firmware/
+build/
+
+.DS_Store
+.agents/tmp/
+.agents/archive/*
+!.agents/archive/.gitkeep

@@ -1,0 +1,16 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+config SHIELD_EYELASH_SOFLE_LEFT
+    def_bool $(shields_list_contains,eyelash_sofle_left)
+
+config SHIELD_EYELASH_SOFLE_RIGHT
+    def_bool $(shields_list_contains,eyelash_sofle_right)
+
+config SHIELD_EYELASH_SOFLE_DONGLE
+    def_bool $(shields_list_contains,eyelash_sofle_dongle)
+
+# Same dongle, OLED driven as SSD1306 instead of SH1106. Fallback in case the
+# 1.3" module turns out not to be an SH1106.
+config SHIELD_EYELASH_SOFLE_DONGLE_SSD1306
+    def_bool $(shields_list_contains,eyelash_sofle_dongle_ssd1306)

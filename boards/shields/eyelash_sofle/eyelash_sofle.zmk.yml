@@ -1,0 +1,16 @@
+file_format: "1"
+id: eyelash_sofle
+name: Eyelash Sofle
+type: shield
+url: https://github.com/n3oAlex/zmk-ali-eyelash-sofle
+requires:
+  - pro_micro
+features:
+  - keys
+  - display
+  - encoder
+  - underglow
+  - backlight
+siblings:
+  - eyelash_sofle_left
+  - eyelash_sofle_right
