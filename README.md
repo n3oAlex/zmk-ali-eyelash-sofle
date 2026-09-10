@@ -12,7 +12,7 @@ in `config/west.yml`.
 | Right half | nRF52840, nice!nano v2 compatible | nice!view display, 5-way D-pad (four directions + press, wired as matrix keys), underglow, backlight |
 | Dongle | nRF52840, seller's own PCB | 1.3" 128x64 I2C OLED (SH1106), battery with charger, power switch, reset button |
 
-Pinouts live in `boards/shields/eyelash_sofle/`. All three parts build on the `nice_nano_v2`
+Pinouts live in `boards/shields/eyelash_sofle/`; photos of the dongle board and OLED are in `docs/hardware/`. All three parts build on the `nice_nano_v2`
 board definition because the PCBs match it electrically (bootloader offsets, battery sense,
 external power on P0.13).
 
@@ -65,7 +65,7 @@ ZMK Studio is enabled on the dongle over USB (unlocked by default).
 
 ## Displays
 
-- Dongle: layer name, modifiers, both halves' battery, USB/BLE profile, bongo cat. Provided by
+- Dongle: layer name, modifiers, battery of both halves and of the dongle, USB/BLE profile, bongo cat. Provided by
   the `zmk-dongle-display` module; options in `config/eyelash_sofle_dongle.conf`.
 - Halves: stock nice!view peripheral screen (own battery, connection state, artwork). In
   dongle mode the halves are peripherals and ZMK does not send them the active layer.

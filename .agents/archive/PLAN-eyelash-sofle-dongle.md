@@ -1,5 +1,5 @@
 # PLAN: Clean Eyelash Sofle zmk-config with dongle
-Status: in-progress
+Status: done
 
 ## Summary
 New self-contained zmk-config for the AliExpress "Eyelash Sofle" split keyboard
@@ -18,13 +18,13 @@ likely SH1106). Replaces n3oAlex/zmk-ali-sofle, which was the seller's repo
 - Dongle display: englmaxi/zmk-dongle-display (v0.3 branch). SH1106 first, SSD1306 fallback build.
 - Halves: stock nice_view shield (peripheral screen: battery, connection, art).
 - Dongle: USB when plugged, BLE on battery (ZMK default), never deep-sleeps.
-- CI: GitHub Actions build-user-config@v0.3.0 + keymap-drawer. Local: build.sh (Docker).
+- CI: vendored copy of ZMK's v0.3.0 build-user-config workflow with Node 24 actions (upstream v0.3.x still uses checkout@v4; ZMK main's workflow breaks on v0.3.0) + keymap-drawer. Local: build.sh (Docker).
 - Old repo archived on GitHub after all three devices verified.
 
 ## Open
 - [x] Dongle MCU board photo: custom seller PCB; silkscreen says SDA=P0.17, SCL=P0.21 (used; verify on hardware).
-- [ ] Dongle bootloader: confirm double-tap reset exposes a UF2 drive (never flashed before).
-- [ ] SH1106 vs SSD1306 confirmed on hardware.
+- [x] Dongle bootloader: UF2 drive works.
+- [x] SH1106 confirmed on hardware.
 
 ## TODO
 - [x] Audit old repo / upstream / branches
@@ -33,12 +33,13 @@ likely SH1106). Replaces n3oAlex/zmk-ali-sofle, which was the seller's repo
 - [x] build.yaml + workflows + keymap-drawer config
 - [x] build.sh (Docker) + local build of all targets
 - [x] README (hardware, flashing, pairing procedure)
-- [ ] Create GitHub repo n3oAlex/zmk-ali-eyelash-sofle, push, CI green
-- [ ] Flash + verify on hardware (user), then archive old repo
+- [x] Create GitHub repo n3oAlex/zmk-ali-eyelash-sofle, push, CI green (run 34531213570, no annotations)
+- [x] Flash + verify on hardware (user): all three parts work in dongle mode, OLED works with SH1106 + SCL P0.20
+- [x] Archive old repo
 
 ## Verification
 - Local Docker build (build.sh) of all 6 targets passes on 2026-09-10; only warnings are ZMK's standard nice!nano peripheral USB notice.
-- Not yet verified on hardware.
+- Verified on hardware 2026-09-10 (user).
 
 ## Touched files
 boards/shields/eyelash_sofle/*, config/*, build.yaml, build.sh, .github/workflows/*,
