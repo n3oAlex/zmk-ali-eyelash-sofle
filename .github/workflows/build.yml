@@ -10,4 +10,7 @@ on:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3.0
+    # The workflow revision is independent of the ZMK revision in config/west.yml.
+    # main is used because the v0.3.x workflow still runs actions/checkout@v4
+    # (Node 20, deprecated on GitHub runners).
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
