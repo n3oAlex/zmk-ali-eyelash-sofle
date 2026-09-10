@@ -71,8 +71,7 @@ ZMK Studio is enabled on the dongle over USB (unlocked by default).
   dongle mode the halves are peripherals and ZMK does not send them the active layer.
 
 If the dongle OLED shows a garbled or shifted image, flash `eyelash_sofle_dongle_ssd1306.uf2`
-instead. If it stays blank, the likely cause is the SCL pin: the PCB silkscreen suggests
-P0.21, the nice!nano default is P0.20; change it in `eyelash_sofle_dongle.overlay`.
+instead.
 
 ## Building
 

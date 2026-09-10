@@ -25,21 +25,22 @@
 };
 
 /*
- * OLED I2C pins per the PCB silkscreen: SDA = P0.17, SCL = P0.21.
- * Not the nice!nano default (SCL on P0.20), hence the explicit pinctrl.
+ * OLED I2C pins: SDA = P0.17 (a 0-ohm jumper next to the "SDA" silkscreen
+ * selects P0.17; P0.21 is the unpopulated alternative), SCL = P0.20. These are
+ * the nice!nano defaults, kept explicit so the routing is documented here.
  */
 &pinctrl {
     dongle_i2c_default: dongle_i2c_default {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                <NRF_PSEL(TWIM_SCL, 0, 21)>;
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
         };
     };
 
     dongle_i2c_sleep: dongle_i2c_sleep {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                <NRF_PSEL(TWIM_SCL, 0, 21)>;
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
             low-power-enable;
         };
     };
